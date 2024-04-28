@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 28, 2024 at 06:06 PM
+-- Generation Time: Apr 28, 2024 at 06:55 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -82,8 +82,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `init_quantity`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`) VALUES
-(16, '5', 'Vivo Phone', '5', 100000.00, 150000.00, 9, 2, '2024-04-28 13:45:07'),
-(17, '2', 'Vivo Phone 2', '2', 145000.00, 200000.00, 9, 3, '2024-04-28 13:45:40');
+(16, '45', 'Vivo Phone', '6', 100000.00, 150000.00, 9, 2, '2024-04-28 13:45:07'),
+(17, '16', 'Vivo Phone 2', '4', 145000.00, 200000.00, 9, 3, '2024-04-28 13:45:40');
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,8 @@ CREATE TABLE `sales` (
 --
 
 INSERT INTO `sales` (`id`, `product_id`, `qty`, `price`, `date`) VALUES
-(9, 16, 1, 150000.00, '2024-04-28');
+(9, 16, 40, 6000000.00, '2024-04-28'),
+(10, 17, 12, 2200000.00, '2024-04-28');
 
 -- --------------------------------------------------------
 
@@ -128,7 +129,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'edgar timvere', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'tbqy1vn1.png', 1, '2024-04-28 13:46:01'),
+(1, 'edgar timvere', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'tbqy1vn1.png', 1, '2024-04-28 18:34:18'),
 (2, 'edgar timvere', 'Special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2024-04-28 13:35:29'),
 (3, 'edgar timvere', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2024-04-28 13:30:15'),
 (6, 'EDGAR TIMVERE', 'EDDY', '39dfa55283318d31afe5a3ff4a0e3253e2045e43', 1, 'no_image.jpg', 1, '2024-03-20 22:40:10'),
@@ -231,7 +232,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
