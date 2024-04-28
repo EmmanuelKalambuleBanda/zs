@@ -160,7 +160,7 @@ function page_require_level($require_level)
   global $session;
   $current_user = current_user();
   $login_level = find_by_groupLevel($current_user['user_level']);
-  
+
   if (!$session->isUserLoggedIn(true)) :
     $session->msg('d', 'Please login...');
     redirect('index.php', false);
@@ -307,14 +307,15 @@ function  monthlySales($year)
   return find_by_sql($sql);
 }
 
-function get_available_quantity($product_id) {
+function get_available_quantity($product_id)
+{
   global $db;
 
   $product_id = (int)$product_id;
   $sql = "SELECT quantity FROM products WHERE id = '{$product_id}'";
   $result = find_by_sql($sql);
-  
-  if($result && count($result) === 1) {
+
+  if ($result && count($result) === 1) {
     $row = array_shift($result);
     return $row['quantity'];
   } else {
@@ -323,7 +324,8 @@ function get_available_quantity($product_id) {
 }
 
 
-function get_available_quantity_sales($p_id) {
+function get_available_quantity_sales($p_id)
+{
   global $db;
 
   $p_id = (int)$p_id;
@@ -332,24 +334,26 @@ function get_available_quantity_sales($p_id) {
   $result = find_by_sql($sql);
 
   if ($result && count($result) === 1) {
-      $total_sold = (int)$result[0]['total_sold'];
-      
-      return $total_sold;
+    $total_sold = (int)$result[0]['total_sold'];
+
+    return $total_sold;
   } else {
-      return 0;
+    return 0;
   }
 }
 
 
 
-function calculate_quantity_percentage($quantity, $init_quantity) {
+function calculate_quantity_percentage($quantity, $init_quantity)
+{
   if ($init_quantity == 0) {
-      return 0; 
+    return 0;
   }
   return ($quantity / $init_quantity) * 100;
 }
 
-function get_products_low_quantity_percentage($threshold = 20) {
+function get_products_low_quantity_percentage($threshold)
+{
   global $db;
   $threshold = (int)$threshold;
   $products = find_all('products');

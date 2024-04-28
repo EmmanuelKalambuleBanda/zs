@@ -11,7 +11,7 @@ $products_sold   = find_higest_saleing_product('10');
 $recent_products = find_recent_product_added('5');
 $recent_sales    = find_recent_sale_added('5');
 
-$low_quantity_products = get_products_low_quantity_percentage(20);
+$low_quantity_products = get_products_low_quantity_percentage(30);
 ?>
 <?php include_once('layouts/header.php'); ?>
 
@@ -94,142 +94,142 @@ $low_quantity_products = get_products_low_quantity_percentage(20);
   </div>
 </div>
 <div class="row">
-<?php foreach ($low_quantity_products as $product) : ?>
-  <div class="col-xl-3 col-md-6 mb-4">
-    <div class="card border-left-info shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><?php echo $product['name']; ?></div>
-            <div class="row no-gutters align-items-center">
-              <div class="col-auto">
-                <?php
-                $percentage = round(calculate_quantity_percentage($product['quantity'], $product['init_quantity']), 2);
-                ?>
-                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $percentage; ?>%</div>
-              </div>
-              <div class="col">
-                <div class="progress progress-sm mr-2">
-                  <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $percentage; ?>%" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+  <?php foreach ($low_quantity_products as $product) : ?>
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-left-danger shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-danger text-uppercase mb-1"><?php echo $product['name']; ?></div>
+              <div class="row no-gutters align-items-center">
+                <div class="col-auto">
+                  <?php
+                  $percentage = round(calculate_quantity_percentage($product['quantity'], $product['init_quantity']), 2);
+                  ?>
+                  <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $percentage; ?>%</div>
+                </div>
+                <div class="col">
+                  <div class="progress progress-sm mr-2">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $percentage; ?>%" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+            <div class="col-auto">
+              <i class="fas fa-chart-line fa-2x text-gray-300"></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  <?php endforeach; ?>
+
+</div>
+<div class="row">
+  <div class="col-lg-6 mb-4">
+    <!-- Panel for Highest Selling Products -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>
+          <span class="glyphicon glyphicon-th"></span>
+          <span>Highest Selling Products</span>
+        </strong>
+      </div>
+      <div class="panel-body">
+        <table id="table-highest-selling-products" class="table table-striped table-bordered table-condensed">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Total Sold</th>
+              <th>Total Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($products_sold as $product_sold) : ?>
+              <tr>
+                <td><?php echo remove_junk(first_character($product_sold['name'])); ?></td>
+                <td><?php echo (int)$product_sold['totalSold']; ?></td>
+                <td><?php echo (int)$product_sold['totalQty']; ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-<?php endforeach; ?>
-
-</div>
-<div class="row">
-    <div class="col-lg-6 mb-4">
-        <!-- Panel for Highest Selling Products -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <strong>
-                    <span class="glyphicon glyphicon-th"></span>
-                    <span>Highest Selling Products</span>
-                </strong>
-            </div>
-            <div class="panel-body">
-                <table id="table-highest-selling-products" class="table table-striped table-bordered table-condensed">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Total Sold</th>
-                            <th>Total Quantity</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($products_sold as $product_sold) : ?>
-                            <tr>
-                                <td><?php echo remove_junk(first_character($product_sold['name'])); ?></td>
-                                <td><?php echo (int)$product_sold['totalSold']; ?></td>
-                                <td><?php echo (int)$product_sold['totalQty']; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+  <div class="col-lg-6 mb-4">
+    <!-- Panel for Recent Sales -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>
+          <span class="glyphicon glyphicon-th"></span>
+          <span>RECENT SALES</span>
+        </strong>
+      </div>
+      <div class="panel-body">
+        <table id="table-recent-sales" class="tabletable-striped table-bordered table-condensed">
+          <thead>
+            <tr>
+              <th class="text-center" style="width: 50px;">#</th>
+              <th>Product Name</th>
+              <th>Date</th>
+              <th>Total Sales</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($recent_sales as $recent_sale) : ?>
+              <tr>
+                <td class="text-center"><?php echo count_id(); ?></td>
+                <td>
+                  <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">
+                    <?php echo remove_junk(first_character($recent_sale['name'])); ?>
+                  </a>
+                </td>
+                <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
+                <td>MWK<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
     </div>
-    <div class="col-lg-6 mb-4">
-        <!-- Panel for Recent Sales -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <strong>
-                    <span class="glyphicon glyphicon-th"></span>
-                    <span>RECENT SALES</span>
-                </strong>
-            </div>
-            <div class="panel-body">
-                <table id="table-recent-sales" class="tabletable-striped table-bordered table-condensed">
-                    <thead>
-                        <tr>
-                            <th class="text-center" style="width: 50px;">#</th>
-                            <th>Product Name</th>
-                            <th>Date</th>
-                            <th>Total Sales</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($recent_sales as $recent_sale) : ?>
-                            <tr>
-                                <td class="text-center"><?php echo count_id(); ?></td>
-                                <td>
-                                    <a href="edit_sale.php?id=<?php echo (int)$recent_sale['id']; ?>">
-                                        <?php echo remove_junk(first_character($recent_sale['name'])); ?>
-                                    </a>
-                                </td>
-                                <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
-                                <td>MWK<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <!-- Panel for Recently Added Products -->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <strong>
-                    <span class="glyphicon glyphicon-th"></span>
-                    <span>Recently Added Products</span>
-                </strong>
-            </div>
-            <div class="panel-body">
-                <div class="list-group">
-                    <?php foreach ($recent_products as $recent_product) : ?>
-                        <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo (int)$recent_product['id']; ?>">
-                            <div class="media">
-                                <div class="media-left">
-                                    <?php if ($recent_product['media_id'] === '0') : ?>
-                                        <img class="media-object img-circle" src="uploads/products/no_image.png" alt="" style="max-width: 64px;">
-                                    <?php else : ?>
-                                        <img class="media-object img-circle" src="uploads/products/<?php echo $recent_product['image']; ?>" alt="" style="max-width: 64px;">
-                                    <?php endif; ?>
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="media-heading"><?php echo remove_junk(first_character($recent_product['name'])); ?></h4>
-                                    <span class="label label-warning">MWK<?php echo (int)$recent_product['sale_price']; ?></span>
-                                    <span class="list-group-item-text"><?php echo remove_junk(first_character($recent_product['categorie'])); ?></span>
-                                </div>
-                            </div>
-                        </a>
-                    <?php endforeach; ?>
+  <div class="col-md-4">
+    <!-- Panel for Recently Added Products -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>
+          <span class="glyphicon glyphicon-th"></span>
+          <span>Recently Added Products</span>
+        </strong>
+      </div>
+      <div class="panel-body">
+        <div class="list-group">
+          <?php foreach ($recent_products as $recent_product) : ?>
+            <a class="list-group-item clearfix" href="edit_product.php?id=<?php echo (int)$recent_product['id']; ?>">
+              <div class="media">
+                <div class="media-left">
+                  <?php if ($recent_product['media_id'] === '0') : ?>
+                    <img class="media-object img-circle" src="uploads/products/no_image.png" alt="" style="max-width: 64px;">
+                  <?php else : ?>
+                    <img class="media-object img-circle" src="uploads/products/<?php echo $recent_product['image']; ?>" alt="" style="max-width: 64px;">
+                  <?php endif; ?>
                 </div>
-            </div>
+                <div class="media-body">
+                  <h4 class="media-heading"><?php echo remove_junk(first_character($recent_product['name'])); ?></h4>
+                  <span class="label label-warning">MWK<?php echo (int)$recent_product['sale_price']; ?></span>
+                  <span class="list-group-item-text"><?php echo remove_junk(first_character($recent_product['categorie'])); ?></span>
+                </div>
+              </div>
+            </a>
+          <?php endforeach; ?>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 </div>
@@ -239,4 +239,3 @@ $low_quantity_products = get_products_low_quantity_percentage(20);
 </div>
 
 <?php include_once('layouts/footer.php'); ?>
-
