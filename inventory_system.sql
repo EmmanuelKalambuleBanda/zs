@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2021 at 05:22 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Generation Time: Apr 28, 2024 at 06:06 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,15 +30,14 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`id`, `name`) VALUES
-(9, 'Laptop'),
-(10, 'Mobail');
+(9, 'electronics');
 
 -- --------------------------------------------------------
 
@@ -50,17 +49,15 @@ CREATE TABLE `media` (
   `id` int(11) UNSIGNED NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `file_type` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `media`
 --
 
 INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
-(1, 'lenovo-thinkpad.png', 'image/png'),
-(3, 'hp i5.png', 'image/png'),
-(4, 'Vivo F17pro.png', 'image/png'),
-(5, 'vivo 1.jpg', 'image/jpeg');
+(2, 'vivo 1.jpg', 'image/jpeg'),
+(3, 'Vivo F17pro.png', 'image/png');
 
 -- --------------------------------------------------------
 
@@ -70,6 +67,7 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 
 CREATE TABLE `products` (
   `id` int(11) UNSIGNED NOT NULL,
+  `init_quantity` varchar(50) NOT NULL,
   `name` varchar(255) NOT NULL,
   `quantity` varchar(50) DEFAULT NULL,
   `buy_price` decimal(25,2) DEFAULT NULL,
@@ -77,15 +75,15 @@ CREATE TABLE `products` (
   `categorie_id` int(11) UNSIGNED NOT NULL,
   `media_id` int(11) DEFAULT 0,
   `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`) VALUES
-(14, 'Hp i5', '85', '30000.00', '40000.00', 9, 3, '2021-06-18 16:58:35'),
-(15, 'Vivo F17 Pro ', '85', '10000.00', '15000.00', 10, 4, '2021-06-18 16:59:08');
+INSERT INTO `products` (`id`, `init_quantity`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`) VALUES
+(16, '5', 'Vivo Phone', '5', 100000.00, 150000.00, 9, 2, '2024-04-28 13:45:07'),
+(17, '2', 'Vivo Phone 2', '2', 145000.00, 200000.00, 9, 3, '2024-04-28 13:45:40');
 
 -- --------------------------------------------------------
 
@@ -99,15 +97,14 @@ CREATE TABLE `sales` (
   `qty` int(11) NOT NULL,
   `price` decimal(25,2) NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `sales`
 --
 
 INSERT INTO `sales` (`id`, `product_id`, `qty`, `price`, `date`) VALUES
-(9, 15, 15, '225000.00', '2021-06-18'),
-(10, 14, 15, '600000.00', '2021-06-18');
+(9, 16, 1, 150000.00, '2024-04-28');
 
 -- --------------------------------------------------------
 
@@ -124,16 +121,19 @@ CREATE TABLE `users` (
   `image` varchar(255) DEFAULT 'no_image.jpg',
   `status` int(1) NOT NULL,
   `last_login` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Malhari Jadhav', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'no_image.png', 1, '2021-06-18 17:04:37'),
-(6, 'Akash Jadhav', 'product', 'e5d3240facd7a778cea38f63ce14ab345670d308', 2, 'vfb37vff6.png', 1, '2021-06-18 17:01:20'),
-(7, 'Yash Jadhav', 'Sales', '36242979372ad4ebf65325270a9e9456604241aa', 3, '56qdigj7.png', 1, '2021-06-18 17:04:06');
+(1, 'edgar timvere', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'tbqy1vn1.png', 1, '2024-04-28 13:46:01'),
+(2, 'edgar timvere', 'Special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2024-04-28 13:35:29'),
+(3, 'edgar timvere', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2024-04-28 13:30:15'),
+(6, 'EDGAR TIMVERE', 'EDDY', '39dfa55283318d31afe5a3ff4a0e3253e2045e43', 1, 'no_image.jpg', 1, '2024-03-20 22:40:10'),
+(7, 'SPECIAL', 'SP', '39dfa55283318d31afe5a3ff4a0e3253e2045e43', 2, 'no_image.jpg', 1, NULL),
+(8, 'USER', 'user', '39dfa55283318d31afe5a3ff4a0e3253e2045e43', 3, 'no_image.jpg', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -146,7 +146,7 @@ CREATE TABLE `user_groups` (
   `group_name` varchar(150) NOT NULL,
   `group_level` int(11) NOT NULL,
   `group_status` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `user_groups`
@@ -154,8 +154,8 @@ CREATE TABLE `user_groups` (
 
 INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VALUES
 (1, 'Admin', 1, 1),
-(4, 'Product Manager', 2, 1),
-(5, 'Sales Manager', 3, 1);
+(2, 'special', 2, 1),
+(3, 'User', 3, 1);
 
 --
 -- Indexes for dumped tables
@@ -213,37 +213,37 @@ ALTER TABLE `user_groups`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_groups`
 --
 ALTER TABLE `user_groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

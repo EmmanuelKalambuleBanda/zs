@@ -31,19 +31,19 @@ function validate_fields($var){
   }
 }
 
-function display_msg($msg =''){
-   $output = array();
-   if(!empty($msg)) {
-      foreach ($msg as $key => $value) {
-         $output  = "<div class=\"alert alert-{$key}\">";
-         $output .= "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>";
-         $output .= remove_junk(first_character($value));
-         $output .= "</div>";
-      }
-      return $output;
-   } else {
-     return "" ;
-   }
+function display_msg($msg){
+  $output = '';
+  if(!empty($msg)) {
+    foreach ($msg as $key => $value) {
+      $output .= "<div class=\"alert alert-{$key}\">";
+      $output .= "<a href=\"#\" class=\"close\" data-dismiss=\"alert\">&times;</a>";
+      $output .= remove_junk(first_character($value));
+      $output .= "</div>";
+    }
+    return $output;
+  } else {
+    return "";
+  }
 }
 
 function redirect($url, $permanent = false)
@@ -57,15 +57,17 @@ function redirect($url, $permanent = false)
 }
 
 function total_price($totals){
-   $sum = 0;
-   $sub = 0;
-   foreach($totals as $total ){
-     $sum += $total['total_saleing_price'];
-     $sub += $total['total_buying_price'];
-     $profit = $sum - $sub;
-   }
-   return array($sum,$profit);
+  $sum = 0;
+  $sub = 0;
+  $profit = 0; // Initialize $profit to a default value
+  foreach($totals as $total ){
+    $sum += $total['total_saleing_price'];
+    $sub += $total['total_buying_price'];
+    $profit = $sum - $sub;
+  }
+  return array($sum, $profit);
 }
+
 
 function read_date($str){
      if($str)
@@ -92,6 +94,5 @@ function randString($length = 5)
    $str .= $cha[mt_rand(0,strlen($cha))];
   return $str;
 }
-
 
 ?>

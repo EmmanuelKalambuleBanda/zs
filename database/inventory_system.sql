@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 24, 2024 at 07:27 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.2
+-- Generation Time: Apr 28, 2024 at 06:06 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `categories` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `categories`
@@ -50,14 +49,15 @@ CREATE TABLE `media` (
   `id` int(11) UNSIGNED NOT NULL,
   `file_name` varchar(255) NOT NULL,
   `file_type` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `media`
 --
 
 INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
-(1, 'wp3988322-code-wallpapers (1).jpg', 'image/jpeg');
+(2, 'vivo 1.jpg', 'image/jpeg'),
+(3, 'Vivo F17pro.png', 'image/png');
 
 -- --------------------------------------------------------
 
@@ -67,6 +67,7 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 
 CREATE TABLE `products` (
   `id` int(11) UNSIGNED NOT NULL,
+  `init_quantity` varchar(50) NOT NULL,
   `name` varchar(255) NOT NULL,
   `quantity` varchar(50) DEFAULT NULL,
   `buy_price` decimal(25,2) DEFAULT NULL,
@@ -74,15 +75,15 @@ CREATE TABLE `products` (
   `categorie_id` int(11) UNSIGNED NOT NULL,
   `media_id` int(11) DEFAULT 0,
   `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`) VALUES
-(14, 'iphone', '10', '12.00', '15.00', 9, 1, '2024-03-24 07:12:28'),
-(15, 'iphone  xr', '10', '200000.00', '3000000.00', 9, 1, '2024-03-24 07:25:59');
+INSERT INTO `products` (`id`, `init_quantity`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`) VALUES
+(16, '5', 'Vivo Phone', '5', 100000.00, 150000.00, 9, 2, '2024-04-28 13:45:07'),
+(17, '2', 'Vivo Phone 2', '2', 145000.00, 200000.00, 9, 3, '2024-04-28 13:45:40');
 
 -- --------------------------------------------------------
 
@@ -96,7 +97,14 @@ CREATE TABLE `sales` (
   `qty` int(11) NOT NULL,
   `price` decimal(25,2) NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `sales`
+--
+
+INSERT INTO `sales` (`id`, `product_id`, `qty`, `price`, `date`) VALUES
+(9, 16, 1, 150000.00, '2024-04-28');
 
 -- --------------------------------------------------------
 
@@ -113,16 +121,16 @@ CREATE TABLE `users` (
   `image` varchar(255) DEFAULT 'no_image.jpg',
   `status` int(1) NOT NULL,
   `last_login` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'edgar timvere', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'tbqy1vn1.png', 1, '2024-03-24 07:11:24'),
-(2, 'edgar timvere', 'Special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2024-03-24 07:15:45'),
-(3, 'edgar timvere', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2024-03-24 07:15:01'),
+(1, 'edgar timvere', 'Admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'tbqy1vn1.png', 1, '2024-04-28 13:46:01'),
+(2, 'edgar timvere', 'Special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.png', 1, '2024-04-28 13:35:29'),
+(3, 'edgar timvere', 'User', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.png', 1, '2024-04-28 13:30:15'),
 (6, 'EDGAR TIMVERE', 'EDDY', '39dfa55283318d31afe5a3ff4a0e3253e2045e43', 1, 'no_image.jpg', 1, '2024-03-20 22:40:10'),
 (7, 'SPECIAL', 'SP', '39dfa55283318d31afe5a3ff4a0e3253e2045e43', 2, 'no_image.jpg', 1, NULL),
 (8, 'USER', 'user', '39dfa55283318d31afe5a3ff4a0e3253e2045e43', 3, 'no_image.jpg', 1, NULL);
@@ -138,7 +146,7 @@ CREATE TABLE `user_groups` (
   `group_name` varchar(150) NOT NULL,
   `group_level` int(11) NOT NULL,
   `group_status` int(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `user_groups`
@@ -211,19 +219,19 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `media`
 --
 ALTER TABLE `media`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`

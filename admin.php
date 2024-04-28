@@ -10,6 +10,8 @@ $c_user          = count_by_id('users');
 $products_sold   = find_higest_saleing_product('10');
 $recent_products = find_recent_product_added('5');
 $recent_sales    = find_recent_sale_added('5');
+
+$low_quantity_products = get_products_low_quantity_percentage(20);
 ?>
 <?php include_once('layouts/header.php'); ?>
 
@@ -92,20 +94,23 @@ $recent_sales    = find_recent_sale_added('5');
   </div>
 </div>
 <div class="row">
+<?php foreach ($low_quantity_products as $product) : ?>
   <div class="col-xl-3 col-md-6 mb-4">
     <div class="card border-left-info shadow h-100 py-2">
       <div class="card-body">
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">HP Stock
-            </div>
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><?php echo $product['name']; ?></div>
             <div class="row no-gutters align-items-center">
               <div class="col-auto">
-                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">10%</div>
+                <?php
+                $percentage = round(calculate_quantity_percentage($product['quantity'], $product['init_quantity']), 2);
+                ?>
+                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $percentage; ?>%</div>
               </div>
               <div class="col">
                 <div class="progress progress-sm mr-2">
-                  <div class="progress-bar bg-danger" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                  <div class="progress-bar bg-danger" role="progressbar" style="width: <?php echo $percentage; ?>%" aria-valuenow="<?php echo $percentage; ?>" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
               </div>
             </div>
@@ -117,6 +122,8 @@ $recent_sales    = find_recent_sale_added('5');
       </div>
     </div>
   </div>
+<?php endforeach; ?>
+
 </div>
 <div class="row">
     <div class="col-lg-6 mb-4">
@@ -179,7 +186,7 @@ $recent_sales    = find_recent_sale_added('5');
                                     </a>
                                 </td>
                                 <td><?php echo remove_junk(ucfirst($recent_sale['date'])); ?></td>
-                                <td>$<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
+                                <td>MWK<?php echo remove_junk(first_character($recent_sale['price'])); ?></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
@@ -213,7 +220,7 @@ $recent_sales    = find_recent_sale_added('5');
                                 </div>
                                 <div class="media-body">
                                     <h4 class="media-heading"><?php echo remove_junk(first_character($recent_product['name'])); ?></h4>
-                                    <span class="label label-warning">$<?php echo (int)$recent_product['sale_price']; ?></span>
+                                    <span class="label label-warning">MWK<?php echo (int)$recent_product['sale_price']; ?></span>
                                     <span class="list-group-item-text"><?php echo remove_junk(first_character($recent_product['categorie'])); ?></span>
                                 </div>
                             </div>

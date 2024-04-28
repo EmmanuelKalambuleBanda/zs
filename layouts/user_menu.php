@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="home.php">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="admin.php">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="glyphicon glyphicon-home"></i>
         </div>
@@ -9,13 +9,13 @@
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+    <hr class="sidebar-divider">
 
     <!-- Nav Item - Sales -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSales"
             aria-expanded="true" aria-controls="collapseSales">
-            <i class="glyphicon glyphicon-th-list"></i>
+            <i class="glyphicon glyphicon-credit-card"></i>
             <span>POS</span>
         </a>
         <ul class="collapse" id="collapseSales">
@@ -31,7 +31,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSalesReport"
             aria-expanded="true" aria-controls="collapseSalesReport">
-            <i class="glyphicon glyphicon-signal"></i>
+            <i class="glyphicon glyphicon-duplicate"></i>
             <span>Sales Report</span>
         </a>
         <ul class="collapse" id="collapseSalesReport">
@@ -40,8 +40,5 @@
             <li><a class="nav-link" href="daily_sales.php">Daily sales</a></li>
         </ul>
     </li>
-
-    <!-- Divider -->
-    <hr class="sidebar-divider">
 </ul>
 <!-- End of Sidebar -->

@@ -13,6 +13,13 @@ if(isset($_POST['add_sale'])){
         $date      = $db->escape($_POST['date']);
         $s_date    = make_date();
 
+        $available_qty = get_available_quantity($p_id);
+        if($s_qty > $available_qty) {
+            $session->msg('d',"Sale quantity exceeds available quantity.");
+            redirect('add_sale.php', false);
+            exit();
+        }
+
         $sql  = "INSERT INTO sales (";
         $sql .= "product_id,qty,price,date";
         $sql .= ") VALUES (";
@@ -32,7 +39,6 @@ if(isset($_POST['add_sale'])){
         redirect('add_sale.php',false);
     }
 }
-
 ?>
 
 <?php include_once('layouts/header.php'); ?>
